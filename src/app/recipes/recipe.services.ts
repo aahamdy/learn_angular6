@@ -1,17 +1,28 @@
+import { EventEmitter, Injectable } from "@angular/core";
+
 import { Recipe } from "./recipe.model";
-import { EventEmitter } from "@angular/core";
+import { Ingredient } from "../shared/ingredient.model";
+import { ShopingListService } from "../shoping-list/shoping-list.services";
+
+@Injectable() 
 
 export class RecipeService {
     
     recipeSelected = new EventEmitter<Recipe>();
 
     private recipes: Recipe[] = [
-        new Recipe('A Test Recipe', 'This is a simply test', 'https://www.bbcgoodfood.com/sites/default/files/recipe/recipe-image/2016/09/one-pan-spaghetti-with-nduja-fennel-olives.jpg'),
-        new Recipe('The Second Recipe', 'This is a simply description for the second recipe', 'https://www.bbcgoodfood.com/sites/default/files/recipe/recipe-image/2016/09/one-pan-spaghetti-with-nduja-fennel-olives.jpg')
+        new Recipe('A Test Recipe', 'This is a simply test', 'https://www.bbcgoodfood.com/sites/default/files/recipe/recipe-image/2016/09/one-pan-spaghetti-with-nduja-fennel-olives.jpg', [new Ingredient('Meat', 1), new Ingredient('French Fries', 20)]),
+        new Recipe('The Second Recipe', 'This is a simply description for the second recipe', 'https://www.bbcgoodfood.com/sites/default/files/recipe/recipe-image/2016/09/one-pan-spaghetti-with-nduja-fennel-olives.jpg',[new Ingredient('Buns', 2), new Ingredient('Meat', 1)])
       ];
 
-    getRecipes() {
+      constructor(private slService: ShopingListService){}
+    
+      getRecipes() {
         return this.recipes.slice();
+    }
+
+    addIngredientsToShoppingList(ingredients: Ingredient[]) {
+        this.slService.addIngredients(ingredients);
     }
 
 }
