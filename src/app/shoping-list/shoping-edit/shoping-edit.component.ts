@@ -52,6 +52,11 @@ export class ShopingEditComponent implements OnInit , OnDestroy{
     this.editMode=false;
   }
 
+  onDelete() {
+    this.slService.deleteIngredient(this.editedItemIndex);
+    this.onClear();
+  }
+
   ngOnDestroy() {
     this.subscribtion.unsubscribe(); 
   }
