@@ -35,14 +35,21 @@ export class ShopingEditComponent implements OnInit , OnDestroy{
       );
   }
 
-  onAddIteam(form: NgForm) {
+  onSubmit(form: NgForm) {
     const value = form.value;
     const newIngredient = new Ingredient(value.name, value.amount);
     if (this.editMode) {
       this.slService.updateIngredients(this.editedItemIndex, newIngredient);
+      this.editMode = false;
     } else {
       this.slService.addIngredient(newIngredient);
     }
+    this.slForm.reset();
+  }
+
+  onClear() {
+    this.slForm.reset();
+    this.editMode=false;
   }
 
   ngOnDestroy() {
